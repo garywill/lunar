@@ -37,10 +37,11 @@ install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-	dh_installdirs usr/bin
+	dh_installdirs usr/bin usr/share/lunar
 
 	# Add here commands to install the package into debian/lunar.
 	install -m755 -p lunar debian/lunar/usr/bin/
+	install -m644 -p lunar.bitmap debian/lunar/usr/share/lunar/
 
 # Build architecture-independent files here.
 binary-indep: build install

@@ -163,7 +163,7 @@ int	showHZ = 0;			/* output in hanzi */
 int	showBM = 0;			/* output in bitmap */
 int	showHZ_GB = 0;			/* output in GB-encoded hanzi */
 int	showHZ_B5 = 0;			/* output in Big5-encoded hanzi */
-char	BMfile[] = "lunar.bitmap";	/* bit map file */
+char	BMfile[] = "/usr/share/lunar/lunar.bitmap";	/* bit map file */
 char	GZBM[NBM][BMRow][BMCol];	/* the bitmap array */
 char	*progname;
 

@@ -1,3 +1,11 @@
+lunar (2.2-2) unstable; urgency=medium
+
+  * Oops, I forgot to install lunar.bitmap and to specify its full path
+    in the source code!  Many thanks to Jeronimo Pellegrini for providing
+    the patch to fix the problem.  (Closes: Bug#162634)
+
+ -- Anthony Fok <foka@debian.org>  Sat, 19 Oct 2002 02:00:36 +0800
+
 lunar (2.2-1) unstable; urgency=low
 
   * Initial Release.
