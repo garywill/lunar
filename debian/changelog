@@ -1,0 +1,6 @@
+lunar (2.2-1) unstable; urgency=low
+
+  * Initial Release.
+  * Added Big5 output in addition to the original Hanzi (GB) output.
+
+ -- Anthony Fok <foka@debian.org>  Sun, 22 Sep 2002 14:54:09 +0800

@@ -131,6 +131,26 @@ static char *weekdayGB[] = {
     "四", "五", "六"
 };
 
+static	char	*GanB5[] = {
+    "ヒ", "", "", "", "コ",
+    "", "┌", "ǒ", "ば", ""
+};
+
+static	char	*ZhiB5[] = {
+    "", "ぁ", "盙", "", "ò", "",
+    "と", "ゼ", "ビ", "ɑ", "Ζ", "ヨ"
+};
+
+static	char   *ShengXiaoB5[] = {
+    "公", "", "", "ㄟ", "纒", "矰",
+    "皑", "ο", "礥", "蔓", "", "睫"
+};
+
+static char *weekdayB5[] = {
+    "ら", "", "", "",
+    "", "き", "せ"
+};
+
 
 Date solar, lunar, gan, zhi, gan2, zhi2, lunar2;
 
@@ -141,6 +161,8 @@ int jieAlert;		/* if there is uncertainty in JieQi calculation */
 
 int	showHZ = 0;			/* output in hanzi */
 int	showBM = 0;			/* output in bitmap */
+int	showHZ_GB = 0;			/* output in GB-encoded hanzi */
+int	showHZ_B5 = 0;			/* output in Big5-encoded hanzi */
 char	BMfile[] = "lunar.bitmap";	/* bit map file */
 char	GZBM[NBM][BMRow][BMCol];	/* the bitmap array */
 char	*progname;
@@ -150,9 +172,9 @@ long    Solar2Day(), Solar2Day1(), Lunar2Day();
 void	Day2Lunar(), Day2Solar();
 int     make_yday(), make_mday(), GZcycle();
 void	CalGZ();
-int	JieDate(), JieDate();
+int	CmpDate(), JieDate();
 void    readBM(), display3();
-void	Report(), ReportE(), ReportBM(), ReportGB();
+void	Report(), ReportE(), ReportBM(), ReportGB(), ReportB5();
 void	usage(), Error();
 
 
@@ -175,6 +197,16 @@ char *argv[];
 	    case 'l': if (inverse) leap=1; else usage(); break;
 	    case 'h': showHZ = 1; break;
 	    case 'b': showBM = 1; break;
+	    case '-':
+		if (strncmp(argv[k], "--big5", 7) == 0) {
+		    showHZ = showHZ_B5 = 1;
+		    showHZ_GB = 0;
+		} else if (strncmp(argv[k], "--gb", 5) == 0) {
+		    showHZ = showHZ_GB = 1;
+		    showHZ_B5 = 0;
+		} else
+		    usage();
+		break;
 	    default:  usage(); break;
 	}
     }
@@ -234,7 +266,9 @@ void usage()
     printf("\t\t(in Lunar Calendar, 24 hour clock)\n");
     printf("\t\t-l means the month is a leap month (\"run4 yue4\")\n\n");
     printf("\t\t-h means output in hanzi (GB)\n");
-    printf("\t\t-b means output in \"bitmap\"\n\n");
+    printf("\t\t-b means output in \"bitmap\"\n");
+    printf("\t\t--gb   means output in hanzi (GB)\n");
+    printf("\t\t--big5 means output in hanzi (Big5)\n\n");
     printf("Date range: about %d years from the Solar Date %d.%d.%d\n", Nyear,
 	   SolarFirstDate.year, SolarFirstDate.month, SolarFirstDate.day);
     exit(1);
@@ -243,9 +277,7 @@ void usage()
 
 void Solar2Lunar()
 {
-
     long offset;
-    Date *d;
 
     offset = Solar2Day(&solar);
     solar.weekday = (offset + SolarFirstDate.weekday) % 7;
@@ -269,7 +301,6 @@ void Lunar2Solar()
 {
     long offset;
     int adj;
-    Date *d;
 
     /* A solar day begins at 12 a.m. */
     adj = (lunar.hour == 23)? -1 : 0;
@@ -286,7 +317,7 @@ void Lunar2Solar()
 }
 
 
-#define	LeapYear(y)	(((y)%4==0) && ((y)%100!=0) || ((y)%400==0))
+#define	LeapYear(y)	((((y)%4==0) && ((y)%100!=0)) || ((y)%400==0))
 #define BYEAR		1201
 /* BYEAR % 4 == 1  and BYEAR % 400 == 1 for easy calculation of leap years */
 /* assert(BYEAR <= SolarFirstDate.year) */
@@ -357,7 +388,6 @@ Date *d;
 void Day2Lunar(offset, d)
 long offset;
 Date *d;
-
 {
     int i, m, nYear, leapMonth;
     
@@ -486,7 +516,7 @@ int month1, day1, month2, day2;
 int JieDate(ds, dl)
 Date *ds, *dl;
 {
-    int m, flag;
+    int m, flag = 0;
 
     if (ds->month==1)
     {
@@ -591,7 +621,10 @@ int year;
 void Report()
 {
     if (showHZ)
-	ReportGB();
+	if (showHZ_B5)
+	    ReportB5();
+	else 
+	    ReportGB();
     else if (showBM)
 	ReportBM();
     else
@@ -628,6 +661,39 @@ void ReportGB()
 	if (lunar2.month==1)
 	    printf("* %s\n", "年柱亦可能要修改");
 	printf("* %s\n", "请查有节气时间之万年历");
+    }
+}
+
+
+void ReportB5()
+{
+    printf("%s%d%s%2d%s%2d%s%2d%s%s%s\n", "锭句",
+	   solar.year, "", solar.month, "る", solar.day,
+	   "ら", solar.hour, "",
+	   "琍戳", weekdayB5[solar.weekday]); 
+    printf("%s%d%s%s%2d%s%2d%s%s%s%s%s\n", "潮句",
+	   lunar.year, "", (lunar.leap? "秥":""),
+	   lunar.month, "る", lunar.day, "ら", 
+	   ZhiB5[zhi.hour], "",
+	   "ネ╲妮", ShengXiaoB5[zhi.year]);
+    printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n", "や",
+	   GanB5[gan.year], ZhiB5[zhi.year], "",
+	   GanB5[gan.month], ZhiB5[zhi.month], "る",
+	   GanB5[gan.day], ZhiB5[zhi.day], "ら",
+	   GanB5[gan.hour], ZhiB5[zhi.hour], "");
+    printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+	   "ノ琖衡崩衡ぇò",
+	   GanB5[gan2.year], ZhiB5[zhi2.year], "",
+	   GanB5[gan2.month], ZhiB5[zhi2.month], "る",
+	   GanB5[gan2.day], ZhiB5[zhi2.day], "ら",
+	   GanB5[gan2.hour], ZhiB5[zhi2.hour], "");
+    if (jieAlert)
+    {
+	printf("* %s, %s\n", "琌ら竊",
+	       "る琖璶э");
+	if (lunar2.month==1)
+	    printf("* %s\n", "琖ョ璶э");
+	printf("* %s\n", "叫琩Τ竊丁ぇ窾句");
     }
 }
 
