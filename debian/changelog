@@ -1,3 +1,11 @@
+lunar (2.2-3) unstable; urgency=low
+
+  * Added --utf8 option.  (Closes: Bug#288170)
+  * Updated Standards-Version: 3.6.2
+  * [lunar.c]: Added "#include <stdlib.h>" to remove compiler warnings.
+
+ -- Anthony Fok <foka@debian.org>  Wed,  4 Jan 2006 20:32:25 +0800
+
 lunar (2.2-2) unstable; urgency=medium
 
   * Oops, I forgot to install lunar.bitmap and to specify its full path

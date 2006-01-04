@@ -64,6 +64,7 @@ References:
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* "Bitmap" constants */
@@ -109,6 +110,26 @@ static	char   *ShengXiao[] = {
 static char *weekday[] = {
     "Sunday", "Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday"
+};
+
+static	char	*GanUTF8[] = {
+    "甲", "乙", "丙", "丁", "戊",
+    "己", "庚", "辛", "壬", "癸"
+};
+
+static	char	*ZhiUTF8[] = {
+    "子", "丑", "寅", "卯", "辰", "巳",
+    "午", "未", "申", "酉", "戌", "亥"
+};
+
+static	char   *ShengXiaoUTF8[] = {
+    "鼠", "牛", "虎", "兔", "龙", "蛇",
+    "马", "羊", "猴", "鸡", "狗", "猪"
+};
+
+static char *weekdayUTF8[] = {
+    "日", "一", "二", "三",
+    "四", "五", "六"
 };
 
 static	char	*GanGB[] = {
@@ -161,6 +182,7 @@ int jieAlert;		/* if there is uncertainty in JieQi calculation */
 
 int	showHZ = 0;			/* output in hanzi */
 int	showBM = 0;			/* output in bitmap */
+int	showHZ_UTF8 = 0;		/* output in UTF-8-encoded hanzi */
 int	showHZ_GB = 0;			/* output in GB-encoded hanzi */
 int	showHZ_B5 = 0;			/* output in Big5-encoded hanzi */
 char	BMfile[] = "/usr/share/lunar/lunar.bitmap";	/* bit map file */
@@ -174,7 +196,7 @@ int     make_yday(), make_mday(), GZcycle();
 void	CalGZ();
 int	CmpDate(), JieDate();
 void    readBM(), display3();
-void	Report(), ReportE(), ReportBM(), ReportGB(), ReportB5();
+void	Report(), ReportE(), ReportBM(), ReportUTF8(), ReportGB(), ReportB5();
 void	usage(), Error();
 
 
@@ -198,11 +220,17 @@ char *argv[];
 	    case 'h': showHZ = 1; break;
 	    case 'b': showBM = 1; break;
 	    case '-':
-		if (strncmp(argv[k], "--big5", 7) == 0) {
+		if (strncmp(argv[k], "--utf8", 7) == 0) {
+		    showHZ = showHZ_UTF8 = 1;
+		    showHZ_B5 = 0;
+		    showHZ_GB = 0;
+		} else if (strncmp(argv[k], "--big5", 7) == 0) {
 		    showHZ = showHZ_B5 = 1;
+		    showHZ_UTF8 = 0;
 		    showHZ_GB = 0;
 		} else if (strncmp(argv[k], "--gb", 5) == 0) {
 		    showHZ = showHZ_GB = 1;
+		    showHZ_UTF8 = 0;
 		    showHZ_B5 = 0;
 		} else
 		    usage();
@@ -267,6 +295,7 @@ void usage()
     printf("\t\t-l means the month is a leap month (\"run4 yue4\")\n\n");
     printf("\t\t-h means output in hanzi (GB)\n");
     printf("\t\t-b means output in \"bitmap\"\n");
+    printf("\t\t--utf8 means output in hanzi (UTF-8)\n");
     printf("\t\t--gb   means output in hanzi (GB)\n");
     printf("\t\t--big5 means output in hanzi (Big5)\n\n");
     printf("Date range: about %d years from the Solar Date %d.%d.%d\n", Nyear,
@@ -621,7 +650,9 @@ int year;
 void Report()
 {
     if (showHZ)
-	if (showHZ_B5)
+	if (showHZ_UTF8)
+	    ReportUTF8();
+	else if (showHZ_B5)
 	    ReportB5();
 	else 
 	    ReportGB();
@@ -629,6 +660,39 @@ void Report()
 	ReportBM();
     else
 	ReportE();
+}
+
+
+void ReportUTF8()
+{
+    printf("%s%d%s%2d%s%2d%s%2d%s%s%s\n", "阳历：　",
+	   solar.year, "年", solar.month, "月", solar.day,
+	   "日", solar.hour, "时　",
+	   "星期", weekdayUTF8[solar.weekday]); 
+    printf("%s%d%s%s%2d%s%2d%s%s%s%s%s\n", "阴历：　",
+	   lunar.year, "年", (lunar.leap? "闰":""),
+	   lunar.month, "月", lunar.day, "日", 
+	   ZhiUTF8[zhi.hour], "时　",
+	   "生肖属", ShengXiaoUTF8[zhi.year]);
+    printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n", "干支：　",
+	   GanUTF8[gan.year], ZhiUTF8[zhi.year], "年　",
+	   GanUTF8[gan.month], ZhiUTF8[zhi.month], "月　",
+	   GanUTF8[gan.day], ZhiUTF8[zhi.day], "日　",
+	   GanUTF8[gan.hour], ZhiUTF8[zhi.hour], "时　");
+    printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+	   "用四柱神算推算之时辰八字：　",
+	   GanUTF8[gan2.year], ZhiUTF8[zhi2.year], "年　",
+	   GanUTF8[gan2.month], ZhiUTF8[zhi2.month], "月　",
+	   GanUTF8[gan2.day], ZhiUTF8[zhi2.day], "日　",
+	   GanUTF8[gan2.hour], ZhiUTF8[zhi2.hour], "时　");
+    if (jieAlert)
+    {
+	printf("* %s, %s\n", "是日为节",
+	       "月柱可能要修改");
+	if (lunar2.month==1)
+	    printf("* %s\n", "年柱亦可能要修改");
+	printf("* %s\n", "请查有节气时间之万年历");
+    }
 }
 
 

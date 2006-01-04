@@ -3,12 +3,12 @@ Section: utils
 Priority: optional
 Maintainer: Anthony Fok <foka@debian.org>
 Build-Depends: debhelper (>> 3.0.0)
-Standards-Version: 3.5.7
+Standards-Version: 3.6.2
 
 Package: lunar
 Architecture: any
 Depends: ${shlibs:Depends}
-Description: Chinese Lunar Calendar conversion utility.
+Description: Chinese Lunar Calendar conversion utility
  The program performs date conversion between the Gregorian Solar Calendar
  (SC) and the Chinese Lunar Calendar (LC).  Given a date in either calendar,
  the program also outputs the corresponding "shengxiao" animal of the year)
