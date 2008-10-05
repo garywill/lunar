@@ -1,3 +1,10 @@
+lunar (2.2-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * FIX: lunar-2.2 wrong output on year 2033 (Closes: #366918)
+
+ -- LI Daobing <lidaobing@gmail.com>  Sun, 05 Oct 2008 20:02:16 +0800
+
 lunar (2.2-3) unstable; urgency=low
 
   * Added --utf8 option.  (Closes: Bug#288170)
