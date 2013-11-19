@@ -1,35 +1,53 @@
-This package was debianized by Anthony Fok <foka@debian.org> on
-Sat, 21 Sep 2002 11:54:26 +0800.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Lunar
+Upstream-Contact: Fung F. Lee <lee@umunhum.stanford.edu>
+Source: http://web.archive.org/web/20051027042122/http://umunhum.stanford.edu/~lee/chicomp/chicomp.html
 
-It was downloaded from
-    http://umunhum.stanford.edu/~lee/chicomp/lunar-2.2.tar.gz
+Files: *
+Copyright: 1988,1989,1991,1992,2001 Fung F. Lee <lee@umunhum.stanford.edu>
+                                    and Ricky Yeung <cryeung@hotmail.com>
+License: GPL-2+
 
-Upstream Authors:
-    Fung F. Lee <lee@umunhum.stanford.edu> and
-    Ricky Yeung <cryeung@hotmail.com>
+Files: debian/*
+Copyright: 2002, 2006, 2013 Anthony Fok <foka@debian.org>
+License: GPL-2+
 
-Copyright:
+Files: lunar.c lunar.1 Makefile
+Copyright: 1988,1989,1991,1992,2001 Fung F. Lee <lee@umunhum.stanford.edu>
+                                    and Ricky Yeung <cryeung@hotmail.com>
+           2002, 2006, 2013 Anthony Fok <foka@debian.org>
+License: GPL-2+
 
-    Copyright (C) 1988, 1989, 1991, 1992, 2001 Fung F. Lee and Ricky Yeung
+Files: tables.h
+Copyright: 1988,1989,1991,1992,2001 Fung F. Lee <lee@umunhum.stanford.edu>
+                                    and Ricky Yeung <cryeung@hotmail.com>
+           1992 Hwei Chen Ti <chetihc@nus.edu.sg>
+License: GPL-2+
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or any
-    later version.
+Files: lunar.bitmap
+Copyright: 1991? Weimin Liu <weimin@alpha.ece.jhu.edu>
+License: GPL-2+
 
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or any
+ later version.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ .
+ The last version of this program was released on July 23, 1992 as
+ version 2.1a.  This program was first released under the terms of GNU
+ GPL on October 28, 2001 as version 2.2.  Both versions are identical
+ except for the license text.
+ .
+ The complete text of the GNU General Public License can be found
+ in "/usr/share/common-licenses/GPL" on your Debian system.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-    The last version of this program was released on July 23, 1992 as
-    version 2.1a.  This program was first released under the terms of GNU
-    GPL on October 28, 2001 as version 2.2.  Both versions are identical
-    except for the license text.
-
-The complete text of the GNU General Public License can be found
-in `/usr/share/common-licenses/GPL' on your Debian system.

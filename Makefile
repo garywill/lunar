@@ -24,5 +24,5 @@ lunar:	lunar.o
 	cc -o lunar lunar.o
 
 clean:
-	rm *.o lunar
+	rm *.o
 

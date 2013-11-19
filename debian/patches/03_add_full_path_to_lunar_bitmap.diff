@@ -1,0 +1,24 @@
+Description: Add full path of lunar.bitmap to lunar.c
+ Prepend "/usr/share/lunar/" to "lunar.bitmap" to make "lunar -b"
+ actually works.  Thanks to Jeronimo Pellegrini for finding the bug
+ and submitted a bug report, with patch, to Debian on 2002-09-27.
+ .
+ First applied in 2.2-2.
+Author: Jeronimo Pellegrini <pellegrini@mpcnet.com.br>
+Origin: other, http://bugs.debian.org/162634
+Bug-Debian: http://bugs.debian.org/162634
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2013-10-04
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lunar.c
++++ b/lunar.c
+@@ -142,7 +142,7 @@ int jieAlert;		/* if there is uncertaint
+ 
+ int	showHZ = 0;			/* output in hanzi */
+ int	showBM = 0;			/* output in bitmap */
+-char	BMfile[] = "lunar.bitmap";	/* bit map file */
++char	BMfile[] = "/usr/share/lunar/lunar.bitmap";	/* bit map file */
+ char	GZBM[NBM][BMRow][BMCol];	/* the bitmap array */
+ char	*progname;
+ 

@@ -1,0 +1,81 @@
+Description: Fix GCC compiler warnings found in lunar.c
+ Revise lunar.c to remove GCC compiler warnings such as:
+ .
+  * implicit declaration of function ‘CmpDate’
+  * implicit declaration of function ‘exit’
+  * incompatible implicit declaration of built-in function ‘exit’
+  * unused variable ‘d’
+  * suggest parentheses around ‘&&’ within ‘||’
+  * variable ‘nYear’ set but not used
+ .
+ First applied since 2.2-1; revised in 2.2-3 and 2.2-4.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Last-Update: 2013-10-04
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lunar.c
++++ b/lunar.c
+@@ -64,6 +64,7 @@ References:
+ 
+ 
+ #include <stdio.h>
++#include <stdlib.h>
+ #include <string.h>
+ 
+ /* "Bitmap" constants */
+@@ -150,7 +151,7 @@ long    Solar2Day(), Solar2Day1(), Lunar
+ void	Day2Lunar(), Day2Solar();
+ int     make_yday(), make_mday(), GZcycle();
+ void	CalGZ();
+-int	JieDate(), JieDate();
++int	CmpDate(), JieDate();
+ void    readBM(), display3();
+ void	Report(), ReportE(), ReportBM(), ReportGB();
+ void	usage(), Error();
+@@ -243,9 +244,7 @@ void usage()
+ 
+ void Solar2Lunar()
+ {
+-
+     long offset;
+-    Date *d;
+ 
+     offset = Solar2Day(&solar);
+     solar.weekday = (offset + SolarFirstDate.weekday) % 7;
+@@ -269,7 +268,6 @@ void Lunar2Solar()
+ {
+     long offset;
+     int adj;
+-    Date *d;
+ 
+     /* A solar day begins at 12 a.m. */
+     adj = (lunar.hour == 23)? -1 : 0;
+@@ -286,7 +284,7 @@ void Lunar2Solar()
+ }
+ 
+ 
+-#define	LeapYear(y)	(((y)%4==0) && ((y)%100!=0) || ((y)%400==0))
++#define	LeapYear(y)	((((y)%4==0) && ((y)%100!=0)) || ((y)%400==0))
+ #define BYEAR		1201
+ /* BYEAR % 4 == 1  and BYEAR % 400 == 1 for easy calculation of leap years */
+ /* assert(BYEAR <= SolarFirstDate.year) */
+@@ -328,9 +326,8 @@ long Lunar2Day(d)
+ Date *d;
+ {
+     long offset = 0;
+-    int year, i, m, nYear, leapMonth;
++    int year, i, m, leapMonth;
+ 
+-    nYear = make_yday();
+     year = d->year - LunarFirstDate.year;
+     for (i=0; i<year; i++)
+ 	offset += yday[i];
+@@ -357,7 +354,6 @@ Date *d;
+ void Day2Lunar(offset, d)
+ long offset;
+ Date *d;
+-
+ {
+     int i, m, nYear, leapMonth;
+ 

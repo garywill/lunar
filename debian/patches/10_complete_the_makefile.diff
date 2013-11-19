@@ -1,0 +1,39 @@
+Description: Complete the Makefile so debian/rules can truly be minimal
+ The special provisions in previous debian/rules are now moved into
+ the upstream Makefile.
+ .
+ Also, the explicit compilation rules in Makefile are removed
+ so that compiler flags set by dpkg-buildflags may get through.
+Origin: vendor
+Author: Anthony Fok <foka@debian.org>
+Last-Update: 2013-10-04
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -20,9 +20,22 @@
+ 
+ # CFLAGS= -O
+ 
+-lunar:	lunar.o
+-	cc -o lunar lunar.o
++all: lunar
+ 
+ clean:
+-	rm *.o
++	rm -f *.o lunar
+ 
++PREFIX = /usr
++BINDIR  = $(PREFIX)/bin
++DATADIR = $(PREFIX)/share
++MANDIR  = $(PREFIX)/share/man
++
++install: lunar lunar.1
++	install -m755 -d $(DESTDIR)$(BINDIR)
++	install -m755 -p lunar $(DESTDIR)$(BINDIR)/
++	install -m755 -d $(DESTDIR)$(DATADIR)/lunar
++	install -m644 -p lunar.bitmap $(DESTDIR)$(DATADIR)/lunar/
++	install -m755 -d $(DESTDIR)$(MANDIR)/man1
++	install -m644 -p lunar.1 $(DESTDIR)$(MANDIR)/man1/
++
++.PHONY: install clean

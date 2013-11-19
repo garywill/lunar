@@ -1,0 +1,5 @@
+version=3
+# http://umunhum.stanford.edu/~lee/chicomp/chicomp.html \
+#   (?:.*/)?lunar-(\d[\d\.]*)\.tar\.(?:gz|bz2|xz)
+http://web.archive.org/web/20051027042122/http://umunhum.stanford.edu/~lee/chicomp/chicomp.html \
+  (?:.*/)?lunar-(\d[\d\.]*)\.tar\.(?:gz|bz2|xz)

@@ -1,0 +1,36 @@
+Description: Fix "lunar -b" segfault when compiled with -O2 in gcc-4.8
+ lunar.bitmap contained a line that was too long with extraneous
+ trailing spaces, causing an overflow the array in readBM(), but did not
+ ause any visible error previously.
+ .
+ When compiled with GCC 4.8, however, this bug results in segmentation fault,
+ probably due to the new aggressive loop optimizations used in -O2 and -O3.
+ .
+ See http://blog.regehr.org/archives/918 for a different but related issue.
+Origin: vendor
+Author: Anthony Fok <foka@debian.org>
+Last-Update: 2013-11-20
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lunar.bitmap
++++ b/lunar.bitmap
+@@ -21,7 +21,7 @@ _|___|____
+   |_____|
+        |
+ |-|  --|--
+-|_| ---`---     
++|_| ---`---
+ | | ____|__
+ |-|  \  |
+         |
+--- a/lunar.c
++++ b/lunar.c
+@@ -978,7 +978,7 @@ void readBM()
+ 	  {
+ 	      c = getc(fp);
+ 	      if ((c==EOF) || (c=='\n')) break;
+-	      GZBM[i][j][k++] = c;
++	      if (k<BMCol) GZBM[i][j][k++] = c;
+ 	  }
+ 	  for (m=k; m<BMCol; m++) GZBM[i][j][m] = ' ';
+       }

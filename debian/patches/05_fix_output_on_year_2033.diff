@@ -1,0 +1,37 @@
+Description: Fix lunar-2.2 output on year 2033
+ On 2006-05-26, CHENG Yuk-Pong reported:
+ .
+   I have found a bug in the lunar-2.2, on the leap months in year 2033.
+   The year 2033 is a special case in modern Chinese Lunar Calendar,
+   as the 冬至 must be on 11th month.
+ .
+ and provided a patch on the Debian BTS.
+ .
+ LI Daobing reviewed the patch in October 2008, and noted:
+ .
+   the patch provided by bug reporter still have a bug, the 10th month of
+   2003 in chinese calendar should have 30 days (a big month). so the
+   correct value should be 0x04afb.
+ .
+ Daobing then corrected the patch, prepared a NMU of lunar-2.2-3.1,
+ which was uploaded by Alexander Reichle-Schmehl on 2008-10-08.
+Author: CHENG Yuk-Pong <scim@sdiz.net>
+Author: LI Daobing <lidaobing@gmail.com>
+Origin: vendor, http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=12;filename=lunar-2.2-3.1-nmu.diff;att=1;bug=366918
+Bug-Debian: http://bugs.debian.org/366918
+Reviewed-By: LI Daobing <lidaobing@gmail.com>
+Reviewed-By: Alexander Reichle-Schmehl <tolimar@debian.org>
+Last-Update: 2013-10-03
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/tables.h
++++ b/tables.h
+@@ -86,7 +86,7 @@ static long yearInfo[Nyear] = {
+     0x0a5b0, 0x15176, 0x052b0, 0x0a930, 0x07954,	/* 2020 */
+     0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6,	/* 2025 */
+     0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, 0x05aa0,	/* 2030 */
+-    0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0,	/* 2035 */
++    0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0,	/* 2035 */
+     0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, 0x0b5a0,	/* 2040 */
+     0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0,	/* 2045 */
+     0x0aa50, 0x1b255, 0x06d20, 0x0ada0			/* 2049 */

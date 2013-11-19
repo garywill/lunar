@@ -1,0 +1,192 @@
+Description: Strip trailing whitespace from lunar.c
+ First applied in 2.2-4.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Last-Update: 2013-10-04
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lunar.c
++++ b/lunar.c
+@@ -12,25 +12,25 @@ char version[] = "Lunar Version 2.2 (Oct
+ 
+ # Copyright (C) 1988,1989,1991,1992,2001 Fung F. Lee and Ricky Yeung
+ #
+-# 
++#
+ # This program is free software; you can redistribute it and/or
+ # modify it under the terms of the GNU General Public License
+ # as published by the Free Software Foundation; either version 2
+ # of the License, or any later version.
+-# 
++#
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+-# 
++#
+ # You should have received a copy of the GNU General Public License
+ # along with this program; if not, write to the Free Software Foundation,
+ # Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-# 
++#
+ #
+ # Revision History:
+ # The last version of this program was released on July 23, 1992 as
+-# version 2.1a.  This program was first released under the terms of 
++# version 2.1a.  This program was first released under the terms of
+ # GNU GPL on October 28, 2001 as version 2.2. Both versions are identical
+ # except for the license text.
+ #
+@@ -38,19 +38,19 @@ char version[] = "Lunar Version 2.2 (Oct
+ # Please send your comments and suggestions to the authors:
+ # Fung F. Lee	lee@umunhum.stanford.edu
+ # Ricky Yeung	cryeung@hotmail.com
+-#	
++#
+ # The special "bitmap" file "lunar.bitmap" was contributed
+ # by Weimin Liu (weimin@alpha.ece.jhu.edu).
+ #
+ # Special thanks to Hwei Chen Ti (chetihc@nuscc.nus.sg or
+-# chetihc@nusvm.bitnet) who extended the tables from 2001 to 2049. 
++# chetihc@nusvm.bitnet) who extended the tables from 2001 to 2049.
+ #
+ ----------------------------------------------------------------------------*/
+ 
+ /*
+ This document contains Highest-bit-set GuoBiao (HGB) code, as adopted by
+ CCDOS on IBM PC compatibles, ChineseTalk 6.0 (GB version) on Macintosh,
+-and cxterm on UNIX and X window.  Hence, one may need to transfer this 
++and cxterm on UNIX and X window.  Hence, one may need to transfer this
+ document as a **binary** file.
+ 
+ References:
+@@ -60,7 +60,7 @@ References:
+    《命理革新子平粹言》．徐
+ 3. Da1zhong4 wan4nian2li4.
+    《大众万年历》
+-*/ 
++*/
+ 
+ 
+ #include <stdio.h>
+@@ -162,7 +162,7 @@ char *argv[];
+ {
+     int year, month, day, hour, i, k, option, inverse=0, leap=0;
+     int dateInfo[4];
+-    
++
+     progname = "lunar";
+     printf("%s\n\n", version);
+ 
+@@ -223,7 +223,7 @@ char *argv[];
+     Report();
+     exit(0);
+ }
+- 
++
+ void usage()
+ {
+     printf("Usage:\n\n");
+@@ -249,7 +249,7 @@ void Solar2Lunar()
+ 
+     offset = Solar2Day(&solar);
+     solar.weekday = (offset + SolarFirstDate.weekday) % 7;
+-    
++
+     /* A lunar day begins at 11 p.m. */
+     if (solar.hour == 23)
+ 	offset++;
+@@ -343,7 +343,7 @@ Date *d;
+     }
+     for (m=1; m<d->month; m++)
+ 	offset += mday[m];
+-    if (leapMonth && 
++    if (leapMonth &&
+ 	((d->month>leapMonth) || (d->leap && (d->month==leapMonth))))
+ 	offset += mday[m++];
+     offset += d->day - 1;
+@@ -360,7 +360,7 @@ Date *d;
+ 
+ {
+     int i, m, nYear, leapMonth;
+-    
++
+     nYear = make_yday();
+     for (i=0; i<nYear && offset > 0; i++)
+ 	offset -= yday[i];
+@@ -403,7 +403,7 @@ Date *d;
+     /* offset is now the number of days from SolarFirstDate.year.1.1 */
+ 
+     for (i=SolarFirstDate.year;
+-         (i<SolarFirstDate.year+Nyear) && (offset > 0);	 i++) 
++         (i<SolarFirstDate.year+Nyear) && (offset > 0);	 i++)
+ 	offset -= 365 + LeapYear(i);
+     if (offset<0)
+     {
+@@ -412,7 +412,7 @@ Date *d;
+     }
+     if (i==(SolarFirstDate.year + Nyear)) Error("Year out of range.");
+     d->year = i;
+-    
++
+     /* assert(offset<(365+LeapYear(i))); */
+     for (m=1; m<=12; m++)
+     {
+@@ -439,14 +439,14 @@ int g, z;
+     if (gz >= 60) printf("internal error\n");
+     return gz+1;
+ }
+-	     
++
+ 
+ void CalGZ(offset, d, g, z)
+ long offset;
+ Date *d, *g, *z;
+ {
+     int	year, month;
+-        
++
+     year = d->year - LunarFirstDate.year;
+     month = year * 12 + d->month - 1;   /* leap months do not count */
+ 
+@@ -520,7 +520,7 @@ int make_yday()
+ {
+     int year, i, leap;
+     long code;
+-    
++
+     for (year = 0; year < Nyear; year++)
+     {
+ 	code = yearInfo[year];
+@@ -550,7 +550,7 @@ int year;
+ {
+     int i, leapMonth;
+     long code;
+-    
++
+     code = yearInfo[year];
+     leapMonth = code & 0xf;
+     /* leapMonth == 0 means no leap month */
+@@ -566,7 +566,7 @@ int year;
+     }
+     else
+     {
+-	/* 
++	/*
+ 	  There is a leap month (run4 yue4) L in this year.
+ 	  mday[1] contains the number of days in the 1-st month;
+ 	  mday[L] contains the number of days in the L-th month;
+@@ -604,10 +604,10 @@ void ReportGB()
+     printf("%s%d%s%2d%s%2d%s%2d%s%s%s\n", "阳历：　",
+ 	   solar.year, "年", solar.month, "月", solar.day,
+ 	   "日", solar.hour, "时　",
+-	   "星期", weekdayGB[solar.weekday]); 
++	   "星期", weekdayGB[solar.weekday]);
+     printf("%s%d%s%s%2d%s%2d%s%s%s%s%s\n", "阴历：　",
+ 	   lunar.year, "年", (lunar.leap? "闰":""),
+-	   lunar.month, "月", lunar.day, "日", 
++	   lunar.month, "月", lunar.day, "日",
+ 	   ZhiGB[zhi.hour], "时　",
+ 	   "生肖属", ShengXiaoGB[zhi.year]);
+     printf("%s%s%s%s%s%s%s%s%s%s%s%s%s\n", "干支：　",

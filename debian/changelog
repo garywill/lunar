@@ -1,3 +1,39 @@
+lunar (2.2-4) unstable; urgency=low
+
+  * Acknowledge NMU on 2.2-3.1.  Thanks to CHENG Yuk-Pong for noticing
+    the wrong output on year 2033 and providing an initial patch,
+    and to LI Daobing for providing a corrected patch and NMU.
+  * Use current locale and system time for display by default.
+    Most parameters thus become optional. Saves a lot of typing!  :-)
+  * lunar.bitmap contained a line that was too long, and with the new
+    aggressive loop optimizations in GCC 4.8, "lunar -b" would not stop
+    looping when parsing lunar.bitmap, and would eventually result in a
+    segmentation fault.  Fixed lunar.bitmap and lunar.c accordingly.
+  * Bump Standards-Version to 3.9.4
+  * Switch to dpkg-source 3.0 (quilt) format, and split up the patches
+    as follows:
+     - 01_strip_trailing_whitespace.diff
+     - 02_fix_compiler_warnings.diff
+     - 03_add_full_path_to_lunar_bitmap.diff
+     - 04_add_big5_and_utf8_output.diff
+     - 05_fix_output_on_year_2033.diff
+     - 06_use_locale_and_current_date.diff
+     - 07_fix_segfault_aggressive-loop-optimizations.diff
+     - 10_complete_the_makefile.diff
+     - 20_update_man_page.diff
+  * Convert debian/copyright to machine-readable format
+  * Move to dh9-style minimal rules file
+  * Remove explicit compilation target from Makefile
+    (Lintian: W: lunar: hardening-no-relro usr/bin/lunar)
+  * Add "Depends: ${misc:Depends}
+    (Lintian: W: lunar source: debhelper-but-no-misc-depends lunar)
+  * Update upstream URL to the archived copy found on http://web.archive.org/
+  * Add debian/watch (Lintian: I: lunar source: debian-watch-file-is-missing)
+  * Update man page to reflect the new options added to this Debian version
+    of Lunar.  Thanks to Jidanni for the suggestion!  (Closes: #514069)
+
+ -- Anthony Fok <foka@debian.org>  Wed, 20 Nov 2013 02:07:41 +0800
+
 lunar (2.2-3.1) unstable; urgency=low
 
   * Non-maintainer upload.
