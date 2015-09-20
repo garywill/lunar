@@ -1,3 +1,16 @@
+lunar (2.2-5) unstable; urgency=medium
+
+  * Fix incorrect year in lunar-to-solar conversion.
+    Thanks to Xie Xun for catching my mistaken removal of the call
+    to make_yday() in 2.2-4.  (Closes: #792472)
+  * Update debian/control:
+     - Bump Standards-Version to 3.9.6
+     - Change Maintainer to Debian Chinese Team
+     - Add Vcs-* fields pointing to anonscm.debian.org
+  * Update debian/copyright
+
+ -- Anthony Fok <foka@debian.org>  Sun, 20 Sep 2015 01:01:09 -0600
+
 lunar (2.2-4) unstable; urgency=low
 
   * Acknowledge NMU on 2.2-3.1.  Thanks to CHENG Yuk-Pong for noticing
