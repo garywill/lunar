@@ -3,16 +3,14 @@ Upstream-Name: Lunar
 Upstream-Contact: Fung F. Lee <lee@umunhum.stanford.edu>
 Source: http://web.archive.org/web/20051027042122/http://umunhum.stanford.edu/~lee/chicomp/chicomp.html
 
-Files: *
+Files: lunar.c
 Copyright: 1988,1989,1991,1992,2001 Fung F. Lee <lee@umunhum.stanford.edu>
                                     and Ricky Yeung <cryeung@hotmail.com>
+           2002, 2006, 2013 Anthony Fok <foka@debian.org>
+           2015             Xie Xun <xiexun162534@gmail.com>
 License: GPL-2+
 
-Files: debian/*
-Copyright: 2002, 2006, 2013 Anthony Fok <foka@debian.org>
-License: GPL-2+
-
-Files: lunar.c lunar.1 Makefile
+Files: lunar.1 Makefile
 Copyright: 1988,1989,1991,1992,2001 Fung F. Lee <lee@umunhum.stanford.edu>
                                     and Ricky Yeung <cryeung@hotmail.com>
            2002, 2006, 2013 Anthony Fok <foka@debian.org>
@@ -26,6 +24,10 @@ License: GPL-2+
 
 Files: lunar.bitmap
 Copyright: 1991? Weimin Liu <weimin@alpha.ece.jhu.edu>
+License: GPL-2+
+
+Files: debian/*
+Copyright: 2002, 2006, 2013, 2015 Anthony Fok <foka@debian.org>
 License: GPL-2+
 
 License: GPL-2+
