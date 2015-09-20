@@ -7,7 +7,7 @@ Build-Depends: debhelper (>> 9)
 Standards-Version: 3.9.6
 Homepage: http://web.archive.org/web/20051027042122/http://umunhum.stanford.edu/~lee/chicomp/chicomp.html
 Vcs-Git: git://anonscm.debian.org/chinese/lunar.git
-Vcs-Browser: https://anonscm.debian.org/git/chinese/lunar.git
+Vcs-Browser: https://anonscm.debian.org/cgit/chinese/lunar.git
 
 Package: lunar
 Architecture: any
