@@ -1,10 +1,13 @@
 Source: lunar
 Section: utils
 Priority: optional
-Maintainer: Anthony Fok <foka@debian.org>
+Maintainer: Debian Chinese Team <chinese-developers@lists.alioth.debian.org>
+Uploaders: Anthony Fok <foka@debian.org>
 Build-Depends: debhelper (>> 9)
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Homepage: http://web.archive.org/web/20051027042122/http://umunhum.stanford.edu/~lee/chicomp/chicomp.html
+Vcs-Git: git://anonscm.debian.org/chinese/lunar.git
+Vcs-Browser: https://anonscm.debian.org/git/chinese/lunar.git
 
 Package: lunar
 Architecture: any
