@@ -1,3 +1,9 @@
+lunar (2.2-6) unstable; urgency=medium
+
+  * Correct URL of Vcs-Browser in debian/control
+
+ -- Anthony Fok <foka@debian.org>  Tue, 05 Jan 2016 08:41:17 -0700
+
 lunar (2.2-5) unstable; urgency=medium
 
   * Fix incorrect year in lunar-to-solar conversion.
