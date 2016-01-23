@@ -9,9 +9,16 @@ Description: Fix GCC compiler warnings found in lunar.c
   * variable ‘nYear’ set but not used
  .
  First applied since 2.2-1; revised in 2.2-3 and 2.2-4.
-Author: Anthony Fok <foka@debian.org>
-Origin: vendor
-Last-Update: 2013-10-04
+ .
+ In July 2015, Xie Xun found a bug where lunar 2.2-4 always outputs
+ Solar Year 1900 no matter what the date of lunar-to-solar conversion is,
+ and traced to a bug that I (Anthony) introduced in 2.2-4: When I removed
+ the unused ‘nYear’ variable, I had mistakenly removed the necessary call
+ to make_yday().  Xie Xun’s report and patch in Bug #792472 fixes the bug.
+Author: Anthony Fok <foka@debian.org>, Xie Xun <xiexun162534@gmail.com>
+Origin: vendor, https://bugs.debian.org/cgi-bin/bugreport.cgi?msg=10;bug=792472
+Bug-Debian: https://bugs.debian.org/792472
+Last-Update: 2015-09-19
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/lunar.c
@@ -60,7 +67,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  #define BYEAR		1201
  /* BYEAR % 4 == 1  and BYEAR % 400 == 1 for easy calculation of leap years */
  /* assert(BYEAR <= SolarFirstDate.year) */
-@@ -328,9 +326,8 @@ long Lunar2Day(d)
+@@ -328,9 +326,9 @@ long Lunar2Day(d)
  Date *d;
  {
      long offset = 0;
@@ -68,6 +75,7 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 +    int year, i, m, leapMonth;
  
 -    nYear = make_yday();
++    make_yday();
      year = d->year - LunarFirstDate.year;
      for (i=0; i<year; i++)
  	offset += yday[i];
