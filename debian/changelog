@@ -1,3 +1,10 @@
+lunar (2.2-4+deb8u1) jessie; urgency=medium
+
+  * Merge fix for incorrect year in lunar-to-solar conversion.
+    (Closes: #809551)
+
+ -- ChangZhuo Chen (陳昌倬) <czchen@debian.org>  Sun, 24 Jan 2016 01:49:14 +0800
+
 lunar (2.2-4) unstable; urgency=low
 
   * Acknowledge NMU on 2.2-3.1.  Thanks to CHENG Yuk-Pong for noticing
